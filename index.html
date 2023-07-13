@@ -12,41 +12,64 @@
 
 <div class='grid'>
 
-    <header class='main-header'>
-        <h1>Welcome</h1>
-        <h2>This is going to be my Projects Blog</h2>
+    <header class='coding-header'>
+        <h1>Coding</h1>
     </header>
 
-    <nav class='main-nav'>
-        <a href="index.html">Home</a>
-        <a href="art.html">Art</a>
-        <a href="music.html">Music</a>
-        <a href="coding.html">Coding</a>
-    </nav>
+    <main class='coding-content'>
+        <div class='game-box'>
+            <button type="button" id='game-start'>Play a Game!</button>
 
-    <main class='main-content'>
-        <p>
-            My name is Tyler McIntyre, I am a hobbiest programer who also dabbles a bit in art and music.
-            This site is a project for a coding class and showcases some examples of things I've done or am working on.
-            You can see art and music I've done, or look at some coding projects I've worked on.
-            Although the original purpose for the site was just to pass a final exam, I hope to keep updating it and improving it
-            so I can keep an archive of my stuff and look back on how much I've improved years down the line.
-        </p>
+            <div id='choose-class'>
+                <p id='class-choice'></p>
+                <p id='stats'></p>
+                <div class='center-button'>
+                    <button type="button" id='mobile-button'>SELECT</button>
+                </div>
+            </div>
+
+            <!--Adventure Window-->
+            <div id='adventure'>
+                <div id='adventure-text'></div>
+                <div id='adventure-choices'>
+                    <button type="button" id='choice1'></button>
+                    <button type="button" id='choice2'></button>
+                </div>
+                <div class='center-the-dang-button'>
+                    <button type="button" id='fight-button'>To Battle!</button>
+                </div>
+            </div>
+
+            <!--Battle Window-->
+            <div id='battle'>
+                <div id='battle-text-player'></div>
+                <div id='battle-text-enemy'></div>
+                <div id='battle-stats'>
+                    <div id='player-stats'></div>
+                    <div id='enemy-stats'></div>
+                </div>
+
+                <div id='battle-choices'>
+                    <button type="button" id='option-fight' class='battle-choice'>Fight</button>
+                    <button type="button" id='option-block' class='battle-choice'>Block</button>
+                    <button type="button" id='option-magic' class='battle-choice'>Magic</button>
+                    <button type="button" id='option-run' class='battle-choice'>Run</button>
+                </div>
+
+            </div>
+
+        </div>
+
     </main>
 
-    <footer class='main-footer'>
+    <footer class='coding-footer'>
         <p>
             This is a footer. I'm not really sure what to
             put here yet...
         </p>
     </footer>
 </div>
-
-<!--Loading Animation-->
-<div class='center'>
-    <div id='box1' class='box'></div>
-</div>
-
 <script src='script.js'></script>
+
 </body>
 </html>
