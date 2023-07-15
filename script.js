@@ -24,8 +24,10 @@ let enemy5 = {name: 'Seagull', ORIGINAL_HP: 15, hp: 15, att: 10, arm: 0, spd: 65
 let enemy6 = {name: 'Giant Crab', ORIGINAL_HP: 75, hp: 75, att: 10, arm: 15, spd: 0, magic: 0};
 
 //Game Start
-document.getElementById('game-start').addEventListener('click', () => {
-    document.getElementById('game-start').style.display = 'none';
+gameStart = $("#game-start");
+resetButton = $("#reset-button");
+gameStart.click(() => {
+    gameStart.css("display", "none");
     document.getElementById('choose-class').style.display = 'block';
     document.getElementById('class-choice').innerHTML =
         "Choose Class<br>" +
@@ -36,8 +38,6 @@ document.getElementById('game-start').addEventListener('click', () => {
 
     if ($(window).width() < 700) {
         $('#choice-warrior').click(() => {
-            class_choice = warrior;
-
             document.getElementById('stats').style.display = 'block';
             document.getElementById('stats').innerHTML =
                 "HP: " + class_choice.hp + "<br>" +
@@ -141,21 +141,26 @@ document.getElementById('game-start').addEventListener('click', () => {
 });
 
 //Adventure Loop
+let adventureText = $('#adventure-text');
+let adventureChoices = $('#adventure-choices');
+let choice1 = $('#choice1');
+let choice2 = $('#choice2');
+
 function adventureLoop() {
 
-    document.getElementById('adventure-text').style.display = 'block';
-    document.getElementById('adventure-choices').style.display = 'block';
+    adventureText.css("display", "block");
+    adventureChoices.css("display", "block");
 
     let rng = random(1, 3);
     let enemyChoice;
 
     switch (rng) {
         case 1:
-            $('#adventure-text').html("You find yourself wandering down a forest path...");
-            $('#choice1').html("Head further in");
-            $('#choice2').html("Turn back");
+            adventureText.html("You find yourself wandering down a forest path...");
+            choice1.html("Head further in");
+            choice2.html("Turn back");
 
-            $('#choice1').click(() => {
+            choice1.click(() => {
                 rng = random(1, 2);
                 if (rng === 1) {
                     enemyChoice = enemy1;
@@ -163,38 +168,38 @@ function adventureLoop() {
                     enemyChoice = enemy2;
                 }
 
-                $('#adventure-text').html("Oh No! You come across a " + enemyChoice.name + "!");
-                document.getElementById('adventure-choices').style.display = 'none';
+                adventureText.html("Oh No! You come across a " + enemyChoice.name + "!");
+                adventureChoices.css("display", "none");
                 document.getElementById('fight-button').style.display = 'block';
 
                 $('#fight-button').click(() => {
-                    document.getElementById('adventure-text').style.display = 'none';
+                    adventureText.css('display', 'none');
                     document.getElementById('fight-button').style.display = 'none';
                     battleLoop(enemyChoice);
                 });
             });
 
-            $('#choice2').click(() => {
-                $('#adventure-text').html("You made it out alive! You Win!");
+            choice2.click(() => {
+                adventureText.html("You made it out alive! You Win!");
 
-                document.getElementById('reset-button').style.display = 'block';
-                document.getElementById('adventure-choices').style.display = 'none';
+                resetButton.css("display","block");
+                adventureChoices.css("display", "none");
 
-                $('#reset-button').click(() => {
+                resetButton.click(() => {
                     document.getElementById('choose-class').style.display = 'block';
-                    document.getElementById('reset-button').style.display = 'none';
-                    $('#adventure-text').html('');
+                    resetButton.css("display","none");
+                    adventureText.html('');
                 });
 
             });
 
             break;
         case 2:
-            $('#adventure-text').html("You wake up deep in a cave...");
-            $('#choice1').html("Head further in");
-            $('#choice2').html("Leave the cave");
+            adventureText.html("You wake up deep in a cave...");
+            choice1.html("Head further in");
+            choice2.html("Leave the cave");
 
-            $('#choice1').click(() => {
+            choice1.click(() => {
                 rng = random(3, 4);
                 if (rng === 3) {
                     enemyChoice = enemy3;
@@ -202,39 +207,39 @@ function adventureLoop() {
                     enemyChoice = enemy4;
                 }
 
-                $('#adventure-text').html("Oh No! You come across a " + enemyChoice.name + "!");
-                document.getElementById('adventure-choices').style.display = 'none';
+                adventureText.html("Oh No! You come across a " + enemyChoice.name + "!");
+                adventureChoices.css("display", "none");
                 document.getElementById('fight-button').style.display = 'block';
 
                 $('#fight-button').click(() => {
-                    document.getElementById('adventure-text').style.display = 'none';
+                    adventureText.css("display", "none");
                     document.getElementById('fight-button').style.display = 'none';
                     battleLoop(enemyChoice);
                 });
 
             });
 
-            $('#choice2').click(() => {
-                $('#adventure-text').html("You made it out alive! You Win!");
+            choice2.click(() => {
+                adventureText.html("You made it out alive! You Win!");
 
-                document.getElementById('reset-button').style.display = 'block';
-                document.getElementById('adventure-choices').style.display = 'none';
+                resetButton.css("display","block");
+                adventureChoices.css("display", "none");
 
-                $('#reset-button').click(() => {
+                resetButton.click(() => {
                     document.getElementById('choose-class').style.display = 'block';
-                    document.getElementById('reset-button').style.display = 'none';
-                    $('#adventure-text').html('');
+                    resetButton.css("display","none");
+                    adventureText.html('');
                 });
 
             });
 
             break;
         case 3:
-            $('#adventure-text').html("You walk out onto an island beach...");
-            $('#choice1').html("Walk along the beach");
-            $('#choice2').html("Go back into the jungle");
+            adventureText.html("You walk out onto an island beach...");
+            choice1.html("Walk along the beach");
+            choice2.html("Go back into the jungle");
 
-            $('#choice1').click(() => {
+            choice1.click(() => {
                 rng = random(5, 6);
                 if (rng === 5) {
                     enemyChoice = enemy5;
@@ -242,28 +247,28 @@ function adventureLoop() {
                     enemyChoice = enemy6;
                 }
 
-                $('#adventure-text').html("Oh No! You come across a " + enemyChoice.name + "!");
-                document.getElementById('adventure-choices').style.display = 'none';
+                adventureText.html("Oh No! You come across a " + enemyChoice.name + "!");
+                adventureChoices.css("display", "none");
                 document.getElementById('fight-button').style.display = 'block';
 
                 $('#fight-button').click(() => {
-                    document.getElementById('adventure-text').style.display = 'none';
+                    adventureText.css("display", "none");
                     document.getElementById('fight-button').style.display = 'none';
                     battleLoop(enemyChoice);
                 });
 
             });
 
-            $('#choice2').click(() => {
-                $('#adventure-text').html("You made it out alive! You Win!");
+            choice2.click(() => {
+                adventureText.html("You made it out alive! You Win!");
 
-                document.getElementById('reset-button').style.display = 'block';
-                document.getElementById('adventure-choices').style.display = 'none';
+                resetButton.css("display","block");
+                adventureChoices.css("display", "none");
 
-                $('#reset-button').click(() => {
+                resetButton.click(() => {
                     document.getElementById('choose-class').style.display = 'block';
-                    document.getElementById('reset-button').style.display = 'none';
-                    $('#adventure-text').html('');
+                    resetButton.css("display","none");
+                    adventureText.html('');
                 });
 
             });
@@ -276,21 +281,26 @@ function adventureLoop() {
 } //End of Adventure Loop
 
 //Battle Loop
+let battleTextPlayer = $("#battle-text-player");
+let battleTextEnemy = $("#battle-text-enemy");
+let playerStats = $("#player-stats");
+let enemyStats = $("#enemy-stats");
+
 function battleLoop(enemy) {
-    $('#battle-text-player').show();
-    $('#battle-text-enemy').show();
-    $('#player-stats').show();
-    $('#enemy-stats').show();
+    battleTextPlayer.show();
+    battleTextEnemy.show();
+    playerStats.show();
+    enemyStats.show();
     document.getElementById("battle-choices").style.display = 'grid';
 
     showStats(enemy);
 
     //alert("Enemy HP is currently " + enemy.hp);
 
-    $('#battle-text-enemy').html("The " + enemy.name + " notices you...");
+    battleTextEnemy.html("The " + enemy.name + " notices you...");
 
     $('#option-fight').click(() => {
-        $('#battle-text-player').html("You hit the " + enemy.name + " for " + (Math.max(0, player.att - enemy.arm)) + " damage!");
+        battleTextPlayer.html("You hit the " + enemy.name + " for " + (Math.max(0, player.att - enemy.arm)) + " damage!");
         enemy.hp -= Math.max(0, (player.att - enemy.arm));
 
         showStats(enemy);
@@ -306,7 +316,7 @@ function battleLoop(enemy) {
     });
 
     $('#option-block').click(() => {
-        $('#battle-text-player').html("You increase your defenses for a turn!");
+        battleTextPlayer.html("You increase your defenses for a turn!");
 
         playerDefend = true;
         player.arm *= 2;
@@ -334,27 +344,27 @@ function battleLoop(enemy) {
         switch (magicEffect) {
             case 1:
                 player.hp += player.magic;
-                $('#battle-text-player').html("You feel strange forces increase your HP!");
+                battleTextPlayer.html("You feel strange forces increase your HP!");
                 break;
             case 2:
                 player.att += player.magic;
-                $('#battle-text-player').html("You feel strange forces increase your Attack!");
+                battleTextPlayer.html("You feel strange forces increase your Attack!");
                 break;
             case 3:
                 player.arm += player.magic;
-                $('#battle-text-player').html("You feel strange forces increase your Armor!");
+                battleTextPlayer.html("You feel strange forces increase your Armor!");
                 break;
             case 4:
                 player.spd += player.magic;
-                $('#battle-text-player').html("You feel strange forces increase your Speed");
+                battleTextPlayer.html("You feel strange forces increase your Speed");
                 break;
             case 5:
                 player.magic += player.magic;
-                $('#battle-text-player').html("You feel strange forces increase your Magic!");
+                battleTextPlayer.html("You feel strange forces increase your Magic!");
                 break;
             case 6:
                 enemy.hp -= player.magic;
-                $('#battle-text-player').html("You feel strange forces attack the enemy for " + player.magic + " damage!");
+                battleTextPlayer.html("You feel strange forces attack the enemy for " + player.magic + " damage!");
                 break;
             default:
                 alert("Something went terribly wrong.");
@@ -380,10 +390,10 @@ function battleLoop(enemy) {
         //DEBUG alert("RunChance is " + runChance + " and runSuccess is " + runSuccess);
 
         if (runChance >= runSuccess) {
-            $('#battle-text-player').html("You did it?");
+            battleTextPlayer.html("You did it?");
             winBattle(enemy);
         } else {
-            $('#battle-text-player').html("You failed to run!");
+            battleTextPlayer.html("You failed to run!");
 
             enemyTurn(enemy);
         }
@@ -394,7 +404,7 @@ function battleLoop(enemy) {
 
 //Show Stats
 function showStats(enemy) {
-    $('#player-stats').html(
+    playerStats.html(
         "PLAYER<br>" +
         "----------<br>" +
         "HP: " + player.hp + "<br>" +
@@ -404,7 +414,7 @@ function showStats(enemy) {
         "Magic: " + player.magic
     );
 
-    $('#enemy-stats').html(
+    enemyStats.html(
         enemy.name + "<br>" +
         "----------<br>" +
         "HP: " + enemy.hp + "<br>" +
@@ -424,7 +434,7 @@ function enemyTurn(enemy) {
     }
 
     if (bigAttack) {
-        $('#battle-text-enemy').html("The " + enemy.name + " lands a collossal blow for " + Math.max(0, (enemy.att * 2 - player.arm)) + " damage!");
+        battleTextEnemy.html("The " + enemy.name + " lands a collossal blow for " + Math.max(0, (enemy.att * 2 - player.arm)) + " damage!");
         player.hp -= Math.max(0, (enemy.att * 2 - player.arm));
         bigAttack = false;
     } else {
@@ -433,17 +443,17 @@ function enemyTurn(enemy) {
         switch (enemyAction) {
 
             case 1:
-                $('#battle-text-enemy').html("The " + enemy.name + " attacks for " + Math.max(0, (enemy.att - player.arm)) + " damage!");
+                battleTextEnemy.html("The " + enemy.name + " attacks for " + Math.max(0, (enemy.att - player.arm)) + " damage!");
 
                 player.hp -= Math.max(0, (enemy.att - player.arm));
                 break;
             case 2:
-                $('#battle-text-enemy').html("The " + enemy.name + " raises its guard!");
+                battleTextEnemy.html("The " + enemy.name + " raises its guard!");
 
                 enemyDefend = true;
                 break;
             case 3:
-                $('#battle-text-enemy').html("The " + enemy.name + " is readying a huge blow!");
+                battleTextEnemy.html("The " + enemy.name + " is readying a huge blow!");
 
                 bigAttack = true;
                 break;
@@ -465,13 +475,13 @@ function enemyTurn(enemy) {
 
 //Win Function
 function winBattle(enemy) {
-    $('#battle-text-player').hide();
-    $('#battle-text-enemy').hide();
-    $('#player-stats').hide();
-    $('#enemy-stats').hide();
+    battleTextPlayer.hide();
+    battleTextEnemy.hide();
+    playerStats.hide();
+    enemyStats.hide();
     $('#battle-choices').hide();
-    $('#adventure-text').show();
-    $('#reset-button').show();
+    adventureText.show();
+    resetButton.show();
 
     enemy.hp = enemy.ORIGINAL_HP;
 
@@ -479,39 +489,39 @@ function winBattle(enemy) {
 
     player = class_choice;
 
-    $('#adventure-text').html("You made it out alive! You Win!");
+    adventureText.html("You made it out alive! You Win!");
 
-    $('#reset-button').click(() => {
+    resetButton.click(() => {
         document.getElementById('choose-class').style.display = 'block';
         $('#choose-class').show();
-        $('#reset-button').hide();
-        $('#adventure-text').hide();
-        $('#adventure-text').html('');
+        resetButton.hide();
+        adventureText.hide();
+        adventureText.html('');
     });
 }
 
 //Lose Function
 function loseBattle(enemy) {
-    $('#battle-text-player').hide();
-    $('#battle-text-enemy').hide();
-    $('#player-stats').hide();
-    $('#enemy-stats').hide();
+    battleTextPlayer.hide();
+    battleTextEnemy.hide();
+    playerStats.hide();
+    enemyStats.hide();
     $('#battle-choices').hide();
-    $('#adventure-text').show();
-    $('#reset-button').show();
+    adventureText.show();
+    resetButton.show();
 
     enemy.hp = enemy.ORIGINAL_HP;
 
     //alert("Enemy HP is currently " + enemy.hp);
 
-    $('#adventure-text').html("You died to the " + enemy.name + "! You Lose!");
+    adventureText.html("You died to the " + enemy.name + "! You Lose!");
 
-    $('#reset-button').click(() => {
+    resetButton.click(() => {
         document.getElementById('choose-class').style.display = 'block';
         $('#choose-class').show();
-        $('#reset-button').hide();
-        $('#adventure-text').hide();
-        $('#adventure-text').html('');
+        resetButton.hide();
+        adventureText.hide();
+        adventureText.html('');
     });
 }
 
