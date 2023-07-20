@@ -315,6 +315,11 @@ nav a{
     margin: 4px auto 4px auto;
 }
 
+#battle-text-weather{
+    color: yellow;
+    background-color: blue;
+}
+
 #battle-text-player{
     color: green;
     background-color: #99ff99;

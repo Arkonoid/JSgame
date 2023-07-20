@@ -4,10 +4,52 @@ let enemyDefend = false;
 let playerDefend = false;
 let bigAttack = false;
 
+let battleTextWeather = $("#battle-text-weather");
+
 //Random Number Generator
 function random(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+// Function to get the current weather using an API
+const apiKey = "43d0f8169431361f076ec36feacb7606";
+const apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=hindman"
+
+async function checkWeather(){
+    const response = await fetch(apiUrl + `&appid=${apiKey}`);
+    let data = await response.json();
+
+    console.log(data);
+
+    if (data.weather[0].main == "Clouds") {
+        battleTextWeather.html("It's a cloudy day...");
+    }
+    else if (data.weather[0].main == "Clear") {
+        battleTextWeather.html("It's a clear day!");
+    }
+    else if (data.weather[0].main == "Atmosphere") {
+        battleTextWeather.html("There's an ominous fog everywhere...");
+    }
+    else if (data.weather[0].main == "Snow") {
+        battleTextPlayer.html("Snow falls to the ground!");
+    }
+    else if (data.weather[0].main == "Rain") {
+        battleTextWeather.html("It's raining!");
+    }
+    else if (data.weather[0].main == "Drizzle") {
+        battleTextPlayer.html("There's a drizzle...");
+    }
+    else if (data.weather[0].main == "Thunderstorm") {
+        battleTextWeather.html("There's a huge storm!");
+    }
+    else {
+        battleTextWeather.html("Something went wrong...");
+    }
+
+}
+
+battleTextWeather.hide();
+checkWeather(); // Set the weather text to the current weather
 
 //Classes
 let warrior = {name: 'Warrior', hp: 100, att: 15, arm: 12, spd: 20, magic: 3};
@@ -290,6 +332,7 @@ let playerStats = $("#player-stats");
 let enemyStats = $("#enemy-stats");
 
 function battleLoop(enemy) {
+    battleTextWeather.show();
     battleTextPlayer.show();
     battleTextEnemy.show();
     playerStats.show();
