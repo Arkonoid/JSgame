@@ -36,6 +36,8 @@ gameStart.click(() => {
         "<button type='button' id='choice-mage' class='class-button'>Mage</button>" +
         "<button type='button' id='choice-rogue' class='class-button'>Rogue</button>";
 
+    
+    // This is for the mobile users
     if ($(window).width() < 700) {
         $('#choice-warrior').click(() => {
             document.getElementById('stats').style.display = 'block';
@@ -83,6 +85,7 @@ gameStart.click(() => {
             adventureLoop();
         });
 
+        // This is for the desktop users
     } else {
         $('#choice-warrior').mouseover(() => {
             class_choice = warrior;
