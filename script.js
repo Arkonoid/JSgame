@@ -6,6 +6,8 @@ let bigAttack = false;
 
 let battleTextWeather = $("#battle-text-weather");
 
+let battleWon;
+
 //Random Number Generator
 function random(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -15,34 +17,27 @@ function random(min, max) {
 const apiKey = "43d0f8169431361f076ec36feacb7606";
 const apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=hindman"
 
-async function checkWeather(){
+async function checkWeather() {
     const response = await fetch(apiUrl + `&appid=${apiKey}`);
     let data = await response.json();
 
     console.log(data);
 
-    if (data.weather[0].main == "Clouds") {
+    if (data.weather[0].main === "Clouds") {
         battleTextWeather.html("It's a cloudy day...");
-    }
-    else if (data.weather[0].main == "Clear") {
+    } else if (data.weather[0].main === "Clear") {
         battleTextWeather.html("It's a clear day!");
-    }
-    else if (data.weather[0].main == "Atmosphere") {
+    } else if (data.weather[0].main === "Atmosphere") {
         battleTextWeather.html("There's an ominous fog everywhere...");
-    }
-    else if (data.weather[0].main == "Snow") {
+    } else if (data.weather[0].main === "Snow") {
         battleTextPlayer.html("Snow falls to the ground!");
-    }
-    else if (data.weather[0].main == "Rain") {
+    } else if (data.weather[0].main === "Rain") {
         battleTextWeather.html("It's raining!");
-    }
-    else if (data.weather[0].main == "Drizzle") {
+    } else if (data.weather[0].main === "Drizzle") {
         battleTextPlayer.html("There's a drizzle...");
-    }
-    else if (data.weather[0].main == "Thunderstorm") {
+    } else if (data.weather[0].main === "Thunderstorm") {
         battleTextWeather.html("There's a huge storm!");
-    }
-    else {
+    } else {
         battleTextWeather.html("Something went wrong...");
     }
 
@@ -52,6 +47,17 @@ battleTextWeather.hide();
 checkWeather(); // Set the weather text to the current weather
 
 //Classes
+class Character {
+    constructor(name, hp, att, arm, spd, magic) {
+        this.name = name;
+        this.hp = hp;
+        this.att = att;
+        this.arm = arm;
+        this.spd = spd;
+        this.magic = magic;
+    }
+}
+
 let warrior = {name: 'Warrior', hp: 100, att: 15, arm: 12, spd: 20, magic: 3};
 let mage = {name: 'Mage', hp: 50, att: 5, arm: 5, spd: 35, magic: 25};
 let rogue = {name: 'Rogue', hp: 30, att: 10, arm: 7, spd: 45, magic: 10}
@@ -78,10 +84,12 @@ gameStart.click(() => {
         "<button type='button' id='choice-mage' class='class-button'>Mage</button>" +
         "<button type='button' id='choice-rogue' class='class-button'>Rogue</button>";
 
-    
+
     // This is for the mobile users
     if ($(window).width() < 700) {
         $('#choice-warrior').click(() => {
+            class_choice = warrior;
+
             document.getElementById('stats').style.display = 'block';
             document.getElementById('stats').innerHTML =
                 "HP: " + class_choice.hp + "<br>" +
@@ -227,12 +235,12 @@ function adventureLoop() {
             choice2.click(() => {
                 adventureText.html("You made it out alive! You Win!");
 
-                resetButton.css("display","block");
+                resetButton.css("display", "block");
                 adventureChoices.css("display", "none");
 
                 resetButton.click(() => {
                     document.getElementById('choose-class').style.display = 'block';
-                    resetButton.css("display","none");
+                    resetButton.css("display", "none");
                     adventureText.html('');
                 });
 
@@ -267,12 +275,12 @@ function adventureLoop() {
             choice2.click(() => {
                 adventureText.html("You made it out alive! You Win!");
 
-                resetButton.css("display","block");
+                resetButton.css("display", "block");
                 adventureChoices.css("display", "none");
 
                 resetButton.click(() => {
                     document.getElementById('choose-class').style.display = 'block';
-                    resetButton.css("display","none");
+                    resetButton.css("display", "none");
                     adventureText.html('');
                 });
 
@@ -307,12 +315,12 @@ function adventureLoop() {
             choice2.click(() => {
                 adventureText.html("You made it out alive! You Win!");
 
-                resetButton.css("display","block");
+                resetButton.css("display", "block");
                 adventureChoices.css("display", "none");
 
                 resetButton.click(() => {
                     document.getElementById('choose-class').style.display = 'block';
-                    resetButton.css("display","none");
+                    resetButton.css("display", "none");
                     adventureText.html('');
                 });
 
@@ -354,7 +362,8 @@ function battleLoop(enemy) {
         //alert("Enemy HP is currently " + enemy.hp);
 
         if (enemy.hp <= 0) {
-            winBattle(enemy);
+            battleWon = true;
+            endBattle(enemy, battleWon);
         }
 
         enemyTurn(enemy);
@@ -372,7 +381,8 @@ function battleLoop(enemy) {
         //alert("Enemy HP is currently " + enemy.hp);
 
         if (enemy.hp <= 0) {
-            winBattle(enemy);
+            battleWon = true;
+            endBattle(enemy, battleWon);
         }
 
         enemyTurn(enemy);
@@ -421,7 +431,8 @@ function battleLoop(enemy) {
         //alert("Enemy HP is currently " + enemy.hp);
 
         if (enemy.hp <= 0) {
-            winBattle(enemy);
+            battleWon = true;
+            endBattle(enemy, battleWon);
         }
 
         enemyTurn(enemy);
@@ -437,7 +448,8 @@ function battleLoop(enemy) {
 
         if (runChance >= runSuccess) {
             battleTextPlayer.html("You did it?");
-            winBattle(enemy);
+            battleWon = true;
+            endBattle(enemy, battleWon);
         } else {
             battleTextPlayer.html("You failed to run!");
 
@@ -513,14 +525,16 @@ function enemyTurn(enemy) {
     }
 
     if (player.hp <= 0) {
-        loseBattle(enemy);
+        battleWon = false;
+        endBattle(enemy, battleWon);
     }
 
     showStats(enemy);
 }
 
-//Win Function
-function winBattle(enemy) {
+// End battle function
+function endBattle(enemy, battleWon) {
+    battleTextWeather.hide();
     battleTextPlayer.hide();
     battleTextEnemy.hide();
     playerStats.hide();
@@ -528,41 +542,21 @@ function winBattle(enemy) {
     $('#battle-choices').hide();
     adventureText.show();
     resetButton.show();
-
-    enemy.hp = enemy.ORIGINAL_HP;
 
     //alert("Enemy HP is currently " + enemy.hp);
 
     player = class_choice;
 
-    adventureText.html("You made it out alive! You Win!");
+    if (battleWon) {
+        adventureText.html("You made it out alive! You Win!");
+    } else {
+        adventureText.html("You died to the " + enemy.name + "! You Lose!");
+    }
+
 
     resetButton.click(() => {
-        document.getElementById('choose-class').style.display = 'block';
-        $('#choose-class').show();
-        resetButton.hide();
-        adventureText.hide();
-        adventureText.html('');
-    });
-}
-
-//Lose Function
-function loseBattle(enemy) {
-    battleTextPlayer.hide();
-    battleTextEnemy.hide();
-    playerStats.hide();
-    enemyStats.hide();
-    $('#battle-choices').hide();
-    adventureText.show();
-    resetButton.show();
-
-    enemy.hp = enemy.ORIGINAL_HP;
-
-    //alert("Enemy HP is currently " + enemy.hp);
-
-    adventureText.html("You died to the " + enemy.name + "! You Lose!");
-
-    resetButton.click(() => {
+        // Reset the player's stats
+        class_choice = null;
         document.getElementById('choose-class').style.display = 'block';
         $('#choose-class').show();
         resetButton.hide();
