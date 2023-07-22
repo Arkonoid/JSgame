@@ -263,6 +263,12 @@ nav a{
     width: 100vw;
 }
 
+#reset-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #reset-button{
     display: none;
 }

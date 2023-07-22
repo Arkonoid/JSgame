@@ -1,8 +1,10 @@
 //Variables
 let class_choice;
+let chooseClass = $("#choose-class");
 let enemyDefend = false;
 let playerDefend = false;
 let bigAttack = false;
+let resetButton = $("#reset-button");
 
 let battleTextWeather = $("#battle-text-weather");
 
@@ -11,6 +13,20 @@ let battleWon;
 //Random Number Generator
 function random(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function reset(player) {
+    player.hp = class_choice.ORIGINAL_HP;
+    player.att = class_choice.ORIGINAL_ATT;
+    player.arm = class_choice.ORIGINAL_ARM;
+    player.spd = class_choice.ORIGINAL_SPD;
+    player.magic = class_choice.ORIGINAL_MAGIC;
+
+    chooseClass.css("display", "block");
+    chooseClass.show();
+    resetButton.hide();
+    adventureText.hide();
+    adventureText.html('');
 }
 
 // Function to get the current weather using an API
@@ -47,20 +63,45 @@ battleTextWeather.hide();
 checkWeather(); // Set the weather text to the current weather
 
 //Classes
-class Character {
-    constructor(name, hp, att, arm, spd, magic) {
-        this.name = name;
-        this.hp = hp;
-        this.att = att;
-        this.arm = arm;
-        this.spd = spd;
-        this.magic = magic;
-    }
-}
-
-let warrior = {name: 'Warrior', hp: 100, att: 15, arm: 12, spd: 20, magic: 3};
-let mage = {name: 'Mage', hp: 50, att: 5, arm: 5, spd: 35, magic: 25};
-let rogue = {name: 'Rogue', hp: 30, att: 10, arm: 7, spd: 45, magic: 10}
+let warrior = {
+    name: 'Warrior',
+    ORIGINAL_HP: 100,
+    hp: 100,
+    ORIGINAL_ATT: 15,
+    att: 15,
+    ORIGINAL_ARM: 12,
+    arm: 12,
+    ORIGINAL_SPD: 20,
+    spd: 20,
+    ORIGINAL_MAGIC: 3,
+    magic: 3
+};
+let mage = {
+    name: 'Mage',
+    ORIGINAL_HP: 50,
+    hp: 50,
+    ORIGINAL_ATT: 5,
+    att: 5,
+    ORIGINAL_ARM: 5,
+    arm: 5,
+    ORIGINAL_SPD: 35,
+    spd: 35,
+    ORIGINAL_MAGIC: 25,
+    magic: 25
+};
+let rogue = {
+    name: 'Rogue',
+    ORIGINAL_HP: 30,
+    hp: 30,
+    ORIGINAL_ATT: 10,
+    att: 10,
+    ORIGINAL_ARM: 7,
+    arm: 7,
+    ORIGINAL_SPD: 45,
+    spd: 45,
+    ORIGINAL_MAGIC: 10,
+    magic: 10
+};
 let player;
 
 //Enemies
@@ -72,11 +113,11 @@ let enemy5 = {name: 'Seagull', ORIGINAL_HP: 15, hp: 15, att: 10, arm: 0, spd: 65
 let enemy6 = {name: 'Giant Crab', ORIGINAL_HP: 75, hp: 75, att: 10, arm: 15, spd: 0, magic: 0};
 
 //Game Start
-gameStart = $("#game-start");
-resetButton = $("#reset-button");
+let gameStart = $("#game-start");
+
 gameStart.click(() => {
     gameStart.css("display", "none");
-    document.getElementById('choose-class').style.display = 'block';
+    chooseClass.css("display", "block");
     document.getElementById('class-choice').innerHTML =
         "Choose Class<br>" +
         "------------<br>" +
@@ -130,7 +171,7 @@ gameStart.click(() => {
         });
 
         $('#mobile-button').click(() => {
-            document.getElementById('choose-class').style.display = 'none';
+            chooseClass.css("display", "none");
             player = class_choice;
             adventureLoop();
         });
@@ -149,8 +190,8 @@ gameStart.click(() => {
                 "Magic: " + class_choice.magic;
 
             $('#choice-warrior').click(() => {
-                document.getElementById('choose-class').style.display = 'none';
-                player = class_choice;
+                chooseClass.css("display", "none");
+                player = warrior;
                 adventureLoop();
             });
         });
@@ -167,7 +208,7 @@ gameStart.click(() => {
                 "Magic: " + class_choice.magic;
 
             $('#choice-mage').click(() => {
-                document.getElementById('choose-class').style.display = 'none';
+                chooseClass.css("display", "none");
                 player = class_choice;
                 adventureLoop();
             });
@@ -185,7 +226,7 @@ gameStart.click(() => {
                 "Magic: " + class_choice.magic;
 
             $('#choice-rogue').click(() => {
-                document.getElementById('choose-class').style.display = 'none';
+                chooseClass.css("display", "none");
                 player = class_choice;
                 adventureLoop();
             });
@@ -239,9 +280,7 @@ function adventureLoop() {
                 adventureChoices.css("display", "none");
 
                 resetButton.click(() => {
-                    document.getElementById('choose-class').style.display = 'block';
-                    resetButton.css("display", "none");
-                    adventureText.html('');
+                    reset(player);
                 });
 
             });
@@ -279,9 +318,7 @@ function adventureLoop() {
                 adventureChoices.css("display", "none");
 
                 resetButton.click(() => {
-                    document.getElementById('choose-class').style.display = 'block';
-                    resetButton.css("display", "none");
-                    adventureText.html('');
+                    reset(player);
                 });
 
             });
@@ -319,9 +356,7 @@ function adventureLoop() {
                 adventureChoices.css("display", "none");
 
                 resetButton.click(() => {
-                    document.getElementById('choose-class').style.display = 'block';
-                    resetButton.css("display", "none");
-                    adventureText.html('');
+                    reset(player);
                 });
 
             });
@@ -555,13 +590,7 @@ function endBattle(enemy, battleWon) {
 
 
     resetButton.click(() => {
-        // Reset the player's stats
-        class_choice = null;
-        document.getElementById('choose-class').style.display = 'block';
-        $('#choose-class').show();
-        resetButton.hide();
-        adventureText.hide();
-        adventureText.html('');
+        reset(player);
     });
 }
 
