@@ -1,6 +1,6 @@
 * {
     font-family: monospace;
-    margin: 0px;
+    margin: 0;
 }
 
 body {
@@ -286,7 +286,8 @@ nav a{
 }
 
 .center-the-dang-button{
-    text-align: center;
+    display: flex;
+    justify-content: center;
 }
 
 #choice1,

@@ -7,6 +7,10 @@ let bigAttack = false;
 let resetButton = $("#reset-button");
 
 let battleTextWeather = $("#battle-text-weather");
+let battleTextPlayer = $("#battle-text-player");
+let battleTextEnemy = $("#battle-text-enemy");
+let playerStats = $("#player-stats");
+let enemyStats = $("#enemy-stats");
 
 let battleWon;
 
@@ -21,6 +25,10 @@ function reset(player) {
     player.arm = class_choice.ORIGINAL_ARM;
     player.spd = class_choice.ORIGINAL_SPD;
     player.magic = class_choice.ORIGINAL_MAGIC;
+
+    // Reset the battle text
+    battleTextPlayer.html('');
+    battleTextEnemy.html('');
 
     chooseClass.css("display", "block");
     chooseClass.show();
@@ -369,10 +377,7 @@ function adventureLoop() {
 } //End of Adventure Loop
 
 //Battle Loop
-let battleTextPlayer = $("#battle-text-player");
-let battleTextEnemy = $("#battle-text-enemy");
-let playerStats = $("#player-stats");
-let enemyStats = $("#enemy-stats");
+
 
 function battleLoop(enemy) {
     battleTextWeather.show();
