@@ -3,6 +3,8 @@ A browser-based JavaScript game that incorporates a weather API that changes the
 
 Made for a project as a part of a class.
 
+To play it, download the Zip file and extract. Then, just open the html file and you should be good!
+
 ### The Project Requirements
 ### -------------------------
 
